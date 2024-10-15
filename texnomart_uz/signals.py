@@ -6,6 +6,7 @@ from django.utils.text import slugify
 
 @receiver(pre_save, sender=Product)
 def add_slug_to_product(sender, instance, **kwargs):
+
     if not instance.slug:
         instance.slug = slugify(instance.name)
 
@@ -14,7 +15,8 @@ def add_slug_to_product(sender, instance, **kwargs):
 def update_product_quantity(sender, instance, created, **kwargs):
     if created:
         product = instance.product
-        product.quantity -= instance.quantity
-        product.save()
-
-
+        if product.quantity >= instance.quantity:
+            product.quantity -= instance.quantity
+            product.save()
+        else:
+            raise ValueError(f"Mahsulotda yetarli zaxira mavjud emas: {product.name}")

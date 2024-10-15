@@ -2,7 +2,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     CategoryViewSet, ProductViewSet, ImageViewSet, OrderViewSet, CommentViewSet,
-    AttributeKeyViewSet, AttributeValueViewSet, ProductAttributeViewSet
+    AttributeKeyViewSet, AttributeValueViewSet, ProductAttributeViewSet,
+    CategoryProductsView
 )
 
 router = DefaultRouter()
@@ -17,4 +18,7 @@ router.register(r'product-attributes', ProductAttributeViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+
+
+    path('category/<slug:category_slug>/', CategoryProductsView.as_view(), name='category-products'),
 ]
