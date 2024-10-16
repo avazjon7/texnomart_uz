@@ -8,24 +8,29 @@ from .serializers import (
     OrderSerializer, CommentSerializer, AttributeKeySerializer,
     AttributeValueSerializer, ProductAttributeSerializer
 )
+from rest_framework.permissions import IsAuthenticated
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
 class ImageViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
@@ -52,6 +57,7 @@ class ProductAttributeViewSet(viewsets.ModelViewSet):
 
 
 class CategoryProductsView(APIView):
+    serilaizer_class = CategorySerializer
     def get(self, request, category_slug):
         category = get_object_or_404(Category, slug=category_slug)
 

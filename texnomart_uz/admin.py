@@ -5,6 +5,7 @@ from .models import (
 )
 
 
+
 class BaseModelAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
 
@@ -18,7 +19,7 @@ class CategoryAdmin(BaseModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(BaseModelAdmin):
-    list_display = ('name', 'price', 'quantity', 'category', 'created_at', 'updated_at')
+    list_display = ('id','name', 'price', 'quantity', 'category', 'created_at', 'updated_at')
     list_filter = ('category',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'category__title')
@@ -60,6 +61,6 @@ class AttributeValueAdmin(BaseModelAdmin):
 
 @admin.register(ProductAttribute)
 class ProductAttributeAdmin(admin.ModelAdmin):
-    list_display = ('product', 'attr_key', 'attr_value')
+    list_display = ('id','product', 'attr_key', 'attr_value')
     list_filter = ('product', 'attr_key')
     search_fields = ('product__name', 'attr_key__key_name', 'attr_value__key_value')
