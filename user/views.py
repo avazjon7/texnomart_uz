@@ -1,15 +1,21 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from rest_framework import status
+from django.core.cache import cache
+from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
+from rest_framework_simplejwt.tokens import RefreshToken
+from django_filters.rest_framework import DjangoFilterBackend  # Import filter backend
+from .models import Product
+from .serializers import UserSerializer, ProductSerializer
 
 
+# User Login API
 class UserLoginApiView(APIView):
     def post(self, request):
         username = request.data.get('username')
@@ -34,16 +40,19 @@ class UserLoginApiView(APIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+
+# User Logout API
 class UserLogoutApiView(APIView):
-    authentication_classes = (TokenAuthentication, )
-    parser_classes = (JSONParser, )
+    authentication_classes = (TokenAuthentication,)
+    parser_classes = (JSONParser,)
+
     def post(self, request):
         token = Token.objects.get(user=request.user)
         token.delete()
         return Response({"success": True, "detail": "Logged out!"}, status=status.HTTP_200_OK)
 
 
-
+# User Registration API
 class RegisterApiView(APIView):
     def post(self, request):
         username = request.data.get('username')
@@ -67,10 +76,8 @@ class RegisterApiView(APIView):
         }
         return Response(response, status=status.HTTP_201_CREATED)
 
-from django.core.cache import cache
-from rest_framework.generics import ListAPIView
-from user.serializers import UserSerializer
 
+# User List View with caching
 class UserListView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -84,3 +91,12 @@ class UserListView(ListAPIView):
             cache.set(cache_key, queryset, timeout=60 * 3)
             return queryset
         return cached_data
+
+
+# Product ViewSet with filtering
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend]  # Filter backend qo'shildi
+    filterset_fields = ['category', 'price']  # Filtrlanadigan maydonlar (kategoriya va narx bo'yicha)
+
