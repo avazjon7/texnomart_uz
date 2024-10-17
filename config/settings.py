@@ -160,6 +160,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'asilbekabdulazizov11@gmail.com'
 EMAIL_HOST_PASSWORD = 'g c g d q t i g z c h b w f f q'
 
+# assalomu aleykum ustoz,
+# manda ikki etapli autenfikasiya bolmaganiga Asilbekni google akkauntlarini ishlatdim
 
 
 from datetime import timedelta
