@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from .models import (
     Category, Product, Image, Order, Comment,
     AttributeKey, AttributeValue, ProductAttribute
@@ -64,3 +65,6 @@ class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ('id','product', 'attr_key', 'attr_value')
     list_filter = ('product', 'attr_key')
     search_fields = ('product__name', 'attr_key__key_name', 'attr_value__key_value')
+
+
+admin.site.unregister(Group)

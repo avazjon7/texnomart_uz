@@ -1,0 +1,12 @@
+[
+    {
+        "model": "Product",
+        "data": {
+            "id": 1,
+            "name": "qwerty",
+            "title": null,
+            "created_at": "2024-10-16 09:45:24",
+            "updated_at": "2024-10-16 09:45:24"
+        }
+    }
+]

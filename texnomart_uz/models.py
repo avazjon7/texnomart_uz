@@ -37,6 +37,7 @@ class Product(BaseModel):
     users_like = models.ManyToManyField(User, related_name='products', blank=True)
     slug = models.SlugField(max_length=255, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    image = models.ImageField(upload_to='product/%Y/%m/%d/', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -63,6 +64,7 @@ class Order(BaseModel):
     first_payment = models.FloatField(null=True, blank=True, default=0)
     month = models.PositiveSmallIntegerField(default=3, null=True, blank=True,
                                              validators=[MinValueValidator(3), MaxValueValidator(12)])
+    image = models.ImageField(upload_to='order/%Y/%m/%d/', null=True, blank=True)
 
     @property
     def monthly_payment(self):
@@ -86,6 +88,7 @@ class Comment(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='comments')
     rating = models.PositiveSmallIntegerField(choices=RatingChoices.choices, default=RatingChoices.ZERO, null=True)
+    image = models.ImageField(upload_to='comment/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.username} - {self.product.name}'
@@ -93,6 +96,7 @@ class Comment(BaseModel):
 
 class AttributeKey(models.Model):
     key_name = models.CharField(max_length=200, null=True, blank=True, unique=True)
+    image = models.ImageField(upload_to='attribute_key/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return self.key_name
@@ -100,6 +104,7 @@ class AttributeKey(models.Model):
 
 class AttributeValue(BaseModel):
     key_value = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(upload_to='attribute_value/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return self.key_value
@@ -109,6 +114,7 @@ class ProductAttribute(models.Model):
     attr_key = models.ForeignKey(AttributeKey, on_delete=models.CASCADE, null=True, blank=True)
     attr_value = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='attributes')
+    image = models.ImageField(upload_to='product_attribute/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return f'{self.attr_key.key_name}: {self.attr_value.key_value} ({self.product.name})'
