@@ -14,7 +14,7 @@ def send_creation_email(sender, instance, created, **kwargs):
     if created:
         subject = f"{instance.__class__.__name__} Created Successfully"
         message = f"{instance.__class__.__name__} '{instance}' has been created successfully."
-        recipient_list = ['avazjon867@gmail.com']
+        recipient_list = ['jasurmavlonov02@gmail.com']
         send_mail(
             subject,
             message,

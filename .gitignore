@@ -1,0 +1,79 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.env
+*.env.*
+
+# Virtualenv
+env/
+venv/
+ENV/
+VENV/
+env.bak/
+venv.bak/
+.venv/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Database
+*.sqlite3
+
+# Migrations
+*/migrations/__pycache__/
+*/migrations/*.pyc
+*/migrations/*.pyo
+
+# Django logs
+*.log
+
+# Django media
+media/
+
+# Django static files
+staticfiles/
+
+# Cache
+cache/
+*.cache
+*.bak
+*.swp
+*.swo
+
+# Git itself
+*.orig
+
+# Secrets
+secrets.json
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# pytest
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Pycharm
+.idea/
+
+# Local env files
+.env
+.env.*
